@@ -1,0 +1,332 @@
+{
+  "info": {
+    "name": "Medicine Inventory API",
+    "description": "Complete API collection for Medicine Inventory Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login (JSON)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_id\": \"admin\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login/json",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login", "json"]
+            }
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/me",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "me"]
+            }
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/change-password?old_password=admin123&new_password=newpass123",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "change-password"],
+              "query": [
+                {"key": "old_password", "value": "admin123"},
+                {"key": "new_password", "value": "newpass123"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Medicines",
+      "item": [
+        {
+          "name": "Get All Medicines",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/medicines/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "medicines", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Low Stock Medicines",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/medicines/low-stock",
+              "host": ["{{base_url}}"],
+              "path": ["api", "medicines", "low-stock"]
+            }
+          }
+        },
+        {
+          "name": "Create Medicine",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Aspirin 100mg\",\n  \"potential_allergens\": \"None\",\n  \"restock_threshold\": 50,\n  \"needs_prescription\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/medicines/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "medicines", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Inventory",
+      "item": [
+        {
+          "name": "Get Inventory",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/inventory/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "inventory", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Expiring Soon",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/inventory/expiring-soon?days=30",
+              "host": ["{{base_url}}"],
+              "path": ["api", "inventory", "expiring-soon"],
+              "query": [
+                {"key": "days", "value": "30"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Distribution",
+      "item": [
+        {
+          "name": "Distribute Medicine",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patient_id\": 1,\n  \"inventory_id\": 1,\n  \"quantity\": 10,\n  \"notes\": \"Morning dose\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/distribution/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "distribution", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Today's Distributions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/distribution/today",
+              "host": ["{{base_url}}"],
+              "path": ["api", "distribution", "today"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Restock",
+      "item": [
+        {
+          "name": "Create Restock",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"med_id\": 1,\n  \"batch_no\": 1004,\n  \"quantity_added\": 500,\n  \"price_per_unit\": 5.5,\n  \"best_before\": \"2026-12-31T00:00:00\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/restock/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restock", ""]
+            }
+          }
+        },
+        {
+          "name": "Get Restock Logs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/restock/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "restock", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Patients",
+      "item": [
+        {
+          "name": "Get All Patients",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/patients/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "patients", ""]
+            }
+          }
+        },
+        {
+          "name": "Create Patient",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cnic\": 3333333333333,\n  \"name\": \"Alice Johnson\",\n  \"phone_number\": 3003333333,\n  \"ward_id\": 1,\n  \"diagnosis\": \"Cold\",\n  \"medicines\": \"Paracetamol\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/patients/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "patients", ""]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

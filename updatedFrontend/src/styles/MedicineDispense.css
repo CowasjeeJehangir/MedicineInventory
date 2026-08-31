@@ -1,0 +1,346 @@
+/* Medicine Dispense Page Styles - Scoped to prevent conflicts */
+.medicine-dispense-form .dispense-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8fafc;
+  padding: 20px;
+}
+
+.medicine-dispense-form .dispense-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Medicine Dispense Form Styles */
+.medicine-dispense-form {
+  padding: 24px;
+}
+
+.medicine-dispense-form .form-container {
+  background-color: #f1f5f9;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 2px solid #d1d5db;
+}
+
+/* Form Header */
+.medicine-dispense-form .form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.medicine-dispense-form .form-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.medicine-dispense-form .title-icon {
+  width: 32px;
+  height: 32px;
+  color: #2563eb;
+}
+
+.medicine-dispense-form .form-title h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1f2937;
+  margin: 0;
+}
+
+.medicine-dispense-form .form-badge {
+  font-size: 14px;
+  color: #6b7280;
+  background: white;
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+}
+
+/* Form Content */
+.medicine-dispense-form .form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.medicine-dispense-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.medicine-dispense-form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.medicine-dispense-form .form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.medicine-dispense-form .form-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.medicine-dispense-form .form-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.medicine-dispense-form .form-input::placeholder {
+  color: #9ca3af;
+}
+
+/* Items Section */
+.medicine-dispense-form .items-section {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.medicine-dispense-form .items-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.medicine-dispense-form .items-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.medicine-dispense-form .add-item-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.medicine-dispense-form .add-item-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.medicine-dispense-form .btn-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Items Table */
+.medicine-dispense-form .items-table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.medicine-dispense-form .table-header {
+  display: grid;
+  grid-template-columns: 60px 1fr 120px 60px;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  background-color: #f9fafb;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.medicine-dispense-form .table-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 120px 60px;
+  gap: 8px;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.medicine-dispense-form .col-sno {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.medicine-dispense-form .col-item {
+  display: flex;
+  align-items: center;
+}
+
+.medicine-dispense-form .col-qty {
+  display: flex;
+  align-items: center;
+}
+
+.medicine-dispense-form .col-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.medicine-dispense-form .table-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.medicine-dispense-form .table-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.medicine-dispense-form .table-input::placeholder {
+  color: #9ca3af;
+}
+
+.medicine-dispense-form .remove-btn {
+  padding: 4px;
+  color: #dc2626;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.medicine-dispense-form .remove-btn:hover:not(:disabled) {
+  color: #991b1b;
+  background-color: #fef2f2;
+}
+
+.medicine-dispense-form .remove-btn:disabled {
+  color: #d1d5db;
+  cursor: not-allowed;
+}
+
+/* Form Actions */
+.medicine-dispense-form .form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.medicine-dispense-form .submit-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background-color: #16a34a;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.medicine-dispense-form .submit-btn:hover {
+  background-color: #15803d;
+}
+
+/* Date Display */
+.medicine-dispense-form .date-display {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .medicine-dispense-form .dispense-container {
+    padding: 10px;
+  }
+  
+  .medicine-dispense-form .form-container {
+    padding: 16px;
+  }
+  
+  .medicine-dispense-form .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .medicine-dispense-form .form-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .medicine-dispense-form .items-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .medicine-dispense-form .table-header,
+  .medicine-dispense-form .table-row {
+    grid-template-columns: 40px 1fr 80px 40px;
+    gap: 4px;
+  }
+  
+  .medicine-dispense-form .form-title h1 {
+    font-size: 20px;
+  }
+  
+  .medicine-dispense-form .table-input {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .medicine-dispense-form .table-header,
+  .medicine-dispense-form .table-row {
+    grid-template-columns: 30px 1fr 60px 30px;
+    gap: 2px;
+  }
+  
+  .medicine-dispense-form .table-input {
+    padding: 4px 6px;
+    font-size: 11px;
+  }
+  
+  .medicine-dispense-form .form-input {
+    padding: 6px 8px;
+  }
+  
+  .medicine-dispense-form .add-item-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .medicine-dispense-form .submit-btn {
+    padding: 10px 20px;
+  }
+}

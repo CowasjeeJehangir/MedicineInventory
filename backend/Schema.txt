@@ -1,0 +1,57 @@
+Medicine
+-ID
+-Name
+-Potential Allergens
+-Restock Threshold
+
+Medicine Batch
+-Batch No
+-Med_ID
+-Restock Date
+-Total Count
+-Best Before
+
+Inventory
+-ID
+-Med_ID
+-Batch No
+-Price per unit
+-Quantity
+-Available (True/False)
+-Restock Threshold (optional if handled in Medicine)
+
+Staff
+-ID
+-CNIC
+-Name
+-Phone Number
+-Position
+
+Credentials
+-Staff_ID
+-Account ID (email or username)
+-Password (hashed)
+
+Customer
+-ID
+-CNIC
+-Name
+-Phone Number
+
+Distribution Log
+-ID
+-Customer_ID
+-Staff_ID
+-Med_ID
+-Batch No
+-Quantity
+-Date Given
+-Notes / Reason
+
+Restock Log
+-ID
+-Med_ID
+-Batch No
+-Quantity Added
+-Restock Date
+-Restocked By (Staff_ID)
