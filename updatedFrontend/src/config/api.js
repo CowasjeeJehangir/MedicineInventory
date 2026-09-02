@@ -1,5 +1,9 @@
 // Central API configuration.
-export const API_BASE_URL = '/api';
+const API_ORIGIN = (
+  process.env.REACT_APP_API_URL || 'http://localhost:8000'
+).replace(/\/$/, '');
+
+export const API_BASE_URL = `${API_ORIGIN}/api`;
 
 export const ENDPOINTS = {
   LOGIN: `${API_BASE_URL}/auth/login/json`,
@@ -20,7 +24,7 @@ export const ENDPOINTS = {
   WARDS: `${API_BASE_URL}/wards/`,
   DISTRIBUTION: `${API_BASE_URL}/distribution/`,
 
-  TEST: '/health',
+  TEST: `${API_ORIGIN}/health`,
 };
 
 export const getAuthHeaders = () => {
