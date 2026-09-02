@@ -1,5 +1,5 @@
 from db import Base
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, BigInteger, String, ForeignKey
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -7,9 +7,9 @@ class Staff(Base):
     __tablename__ = "staff"
     
     id = Column(Integer, primary_key=True)
-    cnic = Column(Integer, nullable=False, unique=True)
+    cnic = Column(BigInteger, nullable=False, unique=True)
     name = Column(String, nullable=False)
-    phone_number = Column(Integer, nullable=False)
+    phone_number = Column(BigInteger, nullable=False)
     designation = Column(String, nullable=False)
     
     credentials = relationship("Credentials", back_populates="staff", uselist=False)

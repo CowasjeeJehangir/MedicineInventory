@@ -1,5 +1,5 @@
 from db import Base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, BigInteger, String
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
 
@@ -15,9 +15,9 @@ class Patient(Base):
     __tablename__ = "patient"
     
     id = Column(Integer, primary_key=True)
-    cnic = Column(Integer, unique=True)
+    cnic = Column(BigInteger, unique=True)
     name = Column(String, nullable=False)
-    phone_number = Column(Integer)
+    phone_number = Column(BigInteger)
     ward_id = Column(Integer, ForeignKey("ward.id"))
     diagnosis = Column(String)
     medicines = Column(String)
