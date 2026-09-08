@@ -6,9 +6,11 @@ import UserList from '../components/UserList';
 import UserModal from '../components/UserModal';
 import '../styles/AdminScreen.css';
 import { ENDPOINTS, apiFetch, toUserView } from '../config/api';
+import { useNotification } from '../components/NotificationProvider';
 
 const AdminScreen = () => {
   const navigate = useNavigate();
+  const showNotification = useNotification();
   const [users, setUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
@@ -55,10 +57,10 @@ const AdminScreen = () => {
         });
 
         setUsers(users.filter(user => user.id !== userId));
-        alert('User deleted successfully');
+        showNotification('User deleted successfully.');
       } catch (err) {
         console.error('Error deleting user:', err);
-        alert('Failed to delete user');
+        showNotification('Failed to delete user.', 'error');
       }
     }
   };
@@ -102,9 +104,10 @@ const AdminScreen = () => {
       setIsModalOpen(false);
       setEditingUser(null);
       setError(null);
+      showNotification(editingUser ? 'User updated successfully.' : 'User added successfully.');
     } catch (err) {
       console.error('Error saving user:', err);
-      alert('Failed to save user');
+      showNotification('Failed to save user.', 'error');
     }
   };
 

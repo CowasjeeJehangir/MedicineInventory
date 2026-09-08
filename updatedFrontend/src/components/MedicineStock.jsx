@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useNotification } from './NotificationProvider';
 
 const MedicineStock= ({ medicine, onSave, onCancel }) => {
+  const showNotification = useNotification();
   const [formData, setFormData] = useState({
     article: medicine?.article || '',
     particulars: medicine?.particulars || '',
@@ -13,7 +15,7 @@ const MedicineStock= ({ medicine, onSave, onCancel }) => {
 
   const handleSubmit = () => {
     if (!formData.article || !formData.balance) {
-      alert('Please fill in required fields: Article and Balance');
+      showNotification('Please fill in the medicine name and balance.', 'error');
       return;
     }
     onSave(formData);

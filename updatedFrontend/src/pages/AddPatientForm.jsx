@@ -4,9 +4,11 @@ import Footer from '../components/Footer';
 import PatientForm from '../components/PatientForm';
 import '../styles/MedicineForm.css'; // Reuse the same CSS for layout
 import { ENDPOINTS, apiFetch } from '../config/api';
+import { useNotification } from '../components/NotificationProvider';
 
 const AddPatientForm = ({ onSave }) => {
   const navigate = useNavigate();
+  const showNotification = useNotification();
 
   const handleSave = async (patientData) => {
     console.log('Save patient:', patientData);
@@ -26,7 +28,7 @@ const AddPatientForm = ({ onSave }) => {
       navigate('/pharmacy-patientlist');
     } catch (error) {
       console.error('Error saving patient:', error);
-      alert(error.message || 'Failed to save patient');
+      showNotification(error.message || 'Failed to save patient.', 'error');
     }
   };
 

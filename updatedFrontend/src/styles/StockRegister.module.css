@@ -6,21 +6,23 @@
 }
 
 .backButton {
-  display: block;
-  width: min(1200px, calc(100% - 40px));
-  margin: 20px auto 0;
+  position: fixed;
+  left: 28px;
+  bottom: 28px;
   border: 0;
-  background: transparent;
-  color: #2563eb;
+  border-radius: 999px;
+  padding: 12px 20px;
+  background: #add3eb;
+  color: white;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
-  text-align: left;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
+  z-index: 1000;
 }
 
 .backButton:hover {
-  color: #1d4ed8;
-  text-decoration: underline;
+  background: #87ceeb;
 }
 
 .controls {
@@ -36,9 +38,9 @@
 
 .searchContainer {
   position: relative;
-  flex: 1;
+  flex: 1 1 100%;
   min-width: 300px;
-  max-width: 520px;
+  max-width: none;
 }
 
 .searchIcon {

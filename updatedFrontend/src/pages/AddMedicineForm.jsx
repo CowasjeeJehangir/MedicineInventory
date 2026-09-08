@@ -3,10 +3,12 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MedicineForm from '../components/MedicineForm';
 import { ENDPOINTS, apiFetch } from '../config/api';
+import { useNotification } from '../components/NotificationProvider';
 import '../styles/MedicineForm.css';
 
 const AddMedicineForm = ({ onSave }) => {
   const navigate = useNavigate();
+  const showNotification = useNotification();
 
   const handleSave = async (formData) => {
     console.log('=== SAVING MEDICINE ===');
@@ -41,11 +43,11 @@ const AddMedicineForm = ({ onSave }) => {
         });
       }
 
-      alert('Medicine created successfully!');
+      showNotification('Medicine created successfully.');
       navigate('/medicine-stock');
     } catch (error) {
       console.error('Error saving medicine:', error);
-      alert(error.message || 'Failed to save medicine');
+      showNotification(error.message || 'Failed to save medicine.', 'error');
     }
   };
 

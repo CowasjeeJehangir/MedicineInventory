@@ -5,9 +5,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import styles from '../styles/StockRegister.module.css';
 import { ENDPOINTS, apiFetch } from '../config/api';
+import { useNotification } from '../components/NotificationProvider';
 
 const StockRegisterPage = () => {
   const navigate = useNavigate();
+  const showNotification = useNotification();
   const [medicines, setMedicines] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
@@ -77,11 +79,11 @@ const StockRegisterPage = () => {
         method: 'DELETE',
       });
 
-      alert('Medicine deleted successfully');
+      showNotification('Medicine deleted successfully.');
       fetchMedicines();
     } catch (err) {
       console.error('Error deleting medicine:', err);
-      alert(err.message || 'Failed to delete medicine');
+      showNotification(err.message || 'Failed to delete medicine.', 'error');
     }
   };
 

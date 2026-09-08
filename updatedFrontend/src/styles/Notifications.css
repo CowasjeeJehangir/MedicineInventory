@@ -1,0 +1,33 @@
+.notification {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: min(420px, calc(100% - 48px));
+  padding: 14px 16px;
+  border-radius: 10px;
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.2);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.notification--success { background: #059669; }
+.notification--error { background: #dc2626; }
+
+.notification button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+}
+
+@media (max-width: 480px) {
+  .notification { top: 16px; right: 16px; max-width: calc(100% - 32px); }
+}
