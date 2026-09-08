@@ -147,21 +147,8 @@ const StockRegisterPage = () => {
 
       {/* Back Button */}
       <button
+        className={styles.backButton}
         onClick={() => navigate('/dashboard')}
-        style={{
-          position: 'fixed',
-          bottom: '20px',
-          left: '20px',
-          backgroundColor: "#add3eb",
-          color: 'white',
-          border: 'none',
-          borderRadius: '50px',
-          padding: '12px 20px',
-          cursor: 'pointer',
-          fontSize: '14px',
-          boxShadow: '0px 4px 6px rgba(0,0,0,0.2)',
-          zIndex: 1000
-        }}
       >
         ← Back
       </button>

@@ -5,6 +5,24 @@
   min-height: 100vh;       /* ensures full-page background */         /* optional, keep your spacing */
 }
 
+.backButton {
+  display: block;
+  width: min(1200px, calc(100% - 40px));
+  margin: 20px auto 0;
+  border: 0;
+  background: transparent;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.backButton:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
 .controls {
   display: flex;
   gap: 20px;
