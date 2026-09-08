@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { UserPlus } from "lucide-react";
+import { Search, UserPlus } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -104,6 +104,7 @@ const PharmacyPatientList = () => {
       {/* Controls */}
       <div className={styles.controls}>
         <div className={styles.searchContainer}>
+          <Search className={styles.searchIcon} size={20} aria-hidden="true" />
           {/* Search by Name or ID */}
           <input
             type="text"

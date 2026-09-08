@@ -11,18 +11,30 @@
   margin-bottom: 30px;
   align-items: center;
   flex-wrap: wrap;
+  width: min(1200px, calc(100% - 40px));
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .searchContainer {
   position: relative;
   flex: 1;
-  padding: 20px;
   min-width: 300px;
+  max-width: 520px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  pointer-events: none;
 }
 
 .searchInput {
   width: 100%;
-  padding: 12px 45px 12px 20px;
+  padding: 12px 16px 12px 45px;
   border: 2px solid #e2e8f0;
   border-radius: 25px;
   font-size: 16px;
@@ -62,6 +74,9 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   margin-bottom: 30px;
+  width: min(1200px, calc(100% - 40px));
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .statCard {
@@ -100,6 +115,9 @@
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  width: min(1200px, calc(100% - 40px));
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .tableHeader {
@@ -199,6 +217,7 @@
   
   .searchContainer {
     min-width: unset;
+    max-width: none;
   }
   
   .stats {

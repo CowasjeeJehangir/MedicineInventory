@@ -39,6 +39,9 @@ const AddPatientForm = ({ onSave }) => {
     <div className="medicine-container">
       <div className="medicine-card">
         <Header />
+        <button className="form-back-button" onClick={() => navigate('/pharmacy-patientlist')}>
+          ← Back to patient list
+        </button>
         <PatientForm 
           onSave={handleSave}
           onCancel={handleCancel} // Connected to patient list

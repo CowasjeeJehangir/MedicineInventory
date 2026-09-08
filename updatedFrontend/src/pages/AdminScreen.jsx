@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import UserList from '../components/UserList';
@@ -7,6 +8,7 @@ import '../styles/AdminScreen.css';
 import { ENDPOINTS, apiFetch, toUserView } from '../config/api';
 
 const AdminScreen = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
@@ -120,6 +122,7 @@ const AdminScreen = () => {
       <div className="admin-container">
         <div className="admin-card">
           <Header />
+          <button className="admin-back-button" onClick={() => navigate('/dashboard')}>← Back to dashboard</button>
           <div className="loading-container">
             <p>Loading users...</p>
           </div>
@@ -132,6 +135,7 @@ const AdminScreen = () => {
     <div className="admin-container">
       <div className="admin-card">
         <Header />
+        <button className="admin-back-button" onClick={() => navigate('/dashboard')}>← Back to dashboard</button>
         
         {error && (
           <div className="error-container">

@@ -1,4 +1,33 @@
 /* Medicine Dispense Page Styles - Scoped to prevent conflicts */
+.inventory-container {
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f8fafc;
+}
+
+.inventory-card {
+  width: min(900px, 100%);
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dispense-back-button {
+  margin: 20px 24px 0;
+  border: 0;
+  background: transparent;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.dispense-back-button:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
 .medicine-dispense-form .dispense-container {
   min-height: 100vh;
   display: flex;

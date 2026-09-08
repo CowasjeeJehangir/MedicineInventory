@@ -12,7 +12,7 @@
   border-radius: 16px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 700px; /* Increased width for horizontal layout */
+  max-width: 600px;
   overflow: hidden;
 }
 
@@ -52,6 +52,21 @@
 
 .form-container {
   padding: 32px;
+}
+
+.form-back-button {
+  margin: 20px 32px 0;
+  border: 0;
+  background: transparent;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-back-button:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
 }
 
 .form-header {

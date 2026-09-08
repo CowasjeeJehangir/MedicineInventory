@@ -58,6 +58,9 @@ const AddMedicineForm = ({ onSave }) => {
     <div className="medicine-container">
       <div className="medicine-card">
         <Header />
+        <button className="form-back-button" onClick={() => navigate('/medicine-stock')}>
+          ← Back to stock register
+        </button>
         <MedicineForm 
           onSave={handleSave}
           onCancel={handleCancel} // ✅ Connected to dashboard

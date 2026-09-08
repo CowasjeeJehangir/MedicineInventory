@@ -201,20 +201,13 @@ const StockRegisterPage = () => {
       {/* Controls */}
       <div className={styles.controls}>
         <div className={styles.searchContainer}>
-          <Search size={20} style={{ 
-            position: 'absolute', 
-            left: '15px', 
-            top: '50%', 
-            transform: 'translateY(-50%)',
-            color: '#94a3b8' 
-          }} />
+          <Search className={styles.searchIcon} size={20} aria-hidden="true" />
           <input
             type="text"
             className={styles.searchInput}
             placeholder="Search medicines..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ paddingLeft: '45px' }}
           />
         </div>
 
