@@ -19,3 +19,7 @@ backend/test_db_setup.py
 
 # OS files
 .DS_Store
+# Local verification artifacts
+updatedFrontend/build/
+
+!backend/.env.example

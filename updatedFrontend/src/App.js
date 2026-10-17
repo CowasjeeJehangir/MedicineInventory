@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import SetPasswordPage from './pages/SetPasswordPage';
 import LoginPage from './pages/LoginPage';
 import AddMedicinePage from "./pages/AddMedicineForm";
 import AddPatientPage from './pages/AddPatientForm';
@@ -13,6 +14,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/set-password" element={<SetPasswordPage />} />
         {/* Public route */}
         <Route path="/login" element={<LoginPage />} />
 

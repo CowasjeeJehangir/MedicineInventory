@@ -9,6 +9,11 @@ export const ENDPOINTS = {
   LOGIN: `${API_BASE_URL}/auth/login/json`,
   CURRENT_USER: `${API_BASE_URL}/auth/me`,
 
+  INVITATIONS: `${API_BASE_URL}/invitations/`,
+  VALIDATE_INVITATION: `${API_BASE_URL}/invitations/validate`,
+  COMPLETE_INVITATION: `${API_BASE_URL}/invitations/complete`,
+  REVOKE_INVITATION: (id) => `${API_BASE_URL}/invitations/${id}/revoke`,
+
   USERS: `${API_BASE_URL}/staff/`,
   USER: (id) => `${API_BASE_URL}/staff/${id}`,
 
@@ -50,7 +55,7 @@ export const apiFetch = async (url, options = {}) => {
 
   if (!response.ok) {
     const message = data?.detail || data?.message || `Request failed with status ${response.status}`;
-    throw new Error(message);
+    throw new Error(typeof message === 'string' ? message : 'Please check the submitted fields.');
   }
 
   return { ok: true, status: response.status, data };
@@ -59,7 +64,7 @@ export const apiFetch = async (url, options = {}) => {
 export const toUserView = (staff) => ({
   id: staff.id,
   username: staff.account_id || staff.name,
-  email: staff.account_id || '',
+  email: staff.email || staff.account_id || '',
   name: staff.name,
   role: staff.designation || 'Staff',
   status: 'Active',

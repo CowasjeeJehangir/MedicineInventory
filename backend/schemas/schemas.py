@@ -1,5 +1,5 @@
-from pydantic import BaseModel, Field, ConfigDict
-from typing import Optional
+from pydantic import BaseModel, Field, ConfigDict, EmailStr, field_validator
+from typing import Optional, Literal
 from datetime import datetime
 
 # ============= Authentication Schemas =============
@@ -32,6 +32,7 @@ class StaffUpdate(BaseModel):
 
 class StaffResponse(StaffBase):
     id: int
+    email: Optional[EmailStr] = None
     model_config = ConfigDict(from_attributes=True)
 
 class StaffWithCredentials(StaffResponse):
@@ -234,3 +235,49 @@ class DashboardStats(BaseModel):
     expiring_soon_count: int
     total_patients: int
     distributions_today: int
+
+# ============= Invitation Schemas =============
+class InvitationCreate(BaseModel):
+    email: EmailStr
+    name: str = Field(min_length=1, max_length=200)
+    cnic: int = Field(gt=0)
+    phone_number: int = Field(ge=0)
+    designation: Literal["Admin", "Pharmacist", "Staff"]
+
+    @field_validator("email")
+    @classmethod
+    def normalize_email(cls, value):
+        return str(value).strip().lower()
+
+    @field_validator("name")
+    @classmethod
+    def normalize_name(cls, value):
+        if not value.strip():
+            raise ValueError("Name is required")
+        return value.strip()
+
+
+class InvitationResponse(BaseModel):
+    invite_id: int
+    invite_email: str
+    name: str
+    designation: str
+    status: str
+    expires_at: datetime
+    model_config = ConfigDict(from_attributes=True)
+
+
+class InvitationToken(BaseModel):
+    token: str = Field(min_length=40, max_length=200)
+
+
+class PasswordSetupRequest(InvitationToken):
+    # bcrypt supports at most 72 bytes, checked separately below.
+    password: str = Field(min_length=12, max_length=72)
+
+    @field_validator("password")
+    @classmethod
+    def password_byte_limit(cls, value):
+        if len(value.encode("utf-8")) > 72:
+            raise ValueError("Password must be at most 72 UTF-8 bytes")
+        return value

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import auth, staff, patients, medicines, inventory, distribution, restock, wards
+from routers import invitations, auth, staff, patients, medicines, inventory, distribution, restock, wards
 from db import engine, Base, SessionLocal
 from auth.dependencies import get_password_hash
 from models.staff import Staff, Credentials
@@ -59,6 +59,7 @@ app.add_middleware(
 )
 
 # Include routers
+app.include_router(invitations.router, prefix="/api/invitations", tags=["Invitations"])
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(staff.router, prefix="/api/staff", tags=["Staff"])
 app.include_router(patients.router, prefix="/api/patients", tags=["Patients"])

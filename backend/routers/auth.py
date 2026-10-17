@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from datetime import timedelta
 from db import get_db
 from auth.dependencies import (
@@ -22,7 +23,8 @@ async def login(
 ):
     """Login endpoint using OAuth2 password flow"""
     credential = db.query(Credentials).filter(
-        Credentials.account_id == form_data.username
+        func.lower(Credentials.account_id) == form_data.username.strip().lower()
+        if "@" in form_data.username else Credentials.account_id == form_data.username
     ).first()
     
     if not credential or not verify_password(form_data.password, credential.password):
@@ -46,7 +48,8 @@ async def login_json(
 ):
     """Alternative login endpoint accepting JSON"""
     credential = db.query(Credentials).filter(
-        Credentials.account_id == login_data.account_id
+        func.lower(Credentials.account_id) == login_data.account_id.strip().lower()
+        if "@" in login_data.account_id else Credentials.account_id == login_data.account_id
     ).first()
     
     if not credential or not verify_password(login_data.password, credential.password):

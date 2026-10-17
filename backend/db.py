@@ -28,19 +28,10 @@ engine = create_engine(
     connect_args={"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {},
 )
 
-try:
-    with engine.connect():
-        print("Connection successful!")
-except Exception as e:
-    print(f"Failed to connect to configured database: {e}")
-    print("Falling back to local SQLite database: medicine_inventory.db")
-    DATABASE_URL = "sqlite:///./medicine_inventory.db"
-    engine = create_engine(
-        DATABASE_URL,
-        pool_pre_ping=True,
-        connect_args={"check_same_thread": False},
-    )
-    
+# Fail rather than silently switching databases when the configured DB is unavailable.
+with engine.connect():
+    pass
+
 SessionLocal = sessionmaker(bind=engine)
 
 Base = declarative_base()

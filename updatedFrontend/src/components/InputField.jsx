@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const InputField = ({ label, type, placeholder, value, onChange, icon, showPasswordToggle = false }) => {
+const InputField = ({ label, type, placeholder, value, onChange, icon, showPasswordToggle = false, required = false, disabled = false }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const inputType = type === 'password' && showPassword ? 'text' : type;
@@ -54,7 +54,8 @@ const InputField = ({ label, type, placeholder, value, onChange, icon, showPassw
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          required
+          required={required}
+          disabled={disabled}
         />
         {showPasswordToggle && (
           <button

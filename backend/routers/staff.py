@@ -8,50 +8,6 @@ from schemas.schemas import StaffCreate, StaffUpdate, StaffResponse, StaffWithCr
 
 router = APIRouter()
 
-@router.post("/", response_model=StaffResponse, status_code=status.HTTP_201_CREATED)
-async def create_staff(
-    staff_data: StaffCreate,
-    db: Session = Depends(get_db),
-    current_user: Staff = Depends(require_admin)
-):
-    """Create a new staff member (Admin only)"""
-    # Check if CNIC already exists
-    if db.query(Staff).filter(Staff.cnic == staff_data.cnic).first():
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Staff with this CNIC already exists"
-        )
-    
-    # Check if account_id already exists
-    if db.query(Credentials).filter(Credentials.account_id == staff_data.account_id).first():
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Account ID already exists"
-        )
-    
-    # Create staff
-    new_staff = Staff(
-        cnic=staff_data.cnic,
-        name=staff_data.name,
-        phone_number=staff_data.phone_number,
-        designation=staff_data.designation
-    )
-    db.add(new_staff)
-    db.flush()  # Get the staff.id
-    
-    # Create credentials
-    hashed_password = get_password_hash(staff_data.password)
-    credentials = Credentials(
-        staff_id=new_staff.id,
-        account_id=staff_data.account_id,
-        password=hashed_password
-    )
-    db.add(credentials)
-    db.commit()
-    db.refresh(new_staff)
-    
-    return new_staff
-
 @router.get("/", response_model=List[StaffResponse])
 async def get_all_staff(
     skip: int = 0,

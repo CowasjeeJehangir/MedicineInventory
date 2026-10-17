@@ -19,7 +19,7 @@ const UserList = ({ users, onAddUser, onEditUser, onDeleteUser }) => {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M12 5v14m-7-7h14" stroke="currentColor" strokeWidth="2"/>
           </svg>
-          Add User
+          Invite User
         </button>
       </div>
 

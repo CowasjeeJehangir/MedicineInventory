@@ -17,7 +17,6 @@ const LoginPage = () => {
     const authToken = localStorage.getItem('authToken');
     
     if (userData && authToken) {
-      console.log('User already logged in, redirecting to dashboard');
       navigate('/dashboard');
     }
   }, [navigate]);
@@ -26,11 +25,6 @@ const LoginPage = () => {
     setIsLoading(true);
     setError('');
     
-    console.log('LoginPage - Attempting login with:', loginData);
-    console.log('LoginPage - Data type:', typeof loginData);
-    console.log('LoginPage - Data keys:', Object.keys(loginData || {}));
-    console.log('LoginPage - Username:', loginData?.username);
-    console.log('LoginPage - Password:', loginData?.password ? '[PROVIDED]' : '[MISSING]');
     
     // Validate the data structure
     if (!loginData || typeof loginData !== 'object') {
@@ -46,7 +40,6 @@ const LoginPage = () => {
     }
     
     try {
-      console.log('LoginPage - Sending request to server...');
       
       const { data } = await apiFetch(ENDPOINTS.LOGIN, {
         method: 'POST',
@@ -56,7 +49,6 @@ const LoginPage = () => {
         }),
       });
 
-      console.log('LoginPage - Response data:', data);
 
       if (data.access_token) {
         localStorage.setItem('authToken', data.access_token);
@@ -66,17 +58,12 @@ const LoginPage = () => {
           staff_id: profile.id,
           account_id: loginData.username,
         };
-        console.log('LoginPage - Login successful, storing user data:', user);
         
         localStorage.setItem('userData', JSON.stringify(user));
         
-        // Verify it was saved
-        const saved = localStorage.getItem('userData');
-        console.log('LoginPage - Verified saved data:', saved);
         
         // Small delay to ensure localStorage is written
         setTimeout(() => {
-          console.log('LoginPage - Navigating to dashboard');
           navigate('/dashboard');
         }, 100);
         

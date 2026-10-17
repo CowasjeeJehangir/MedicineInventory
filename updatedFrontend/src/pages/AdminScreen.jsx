@@ -12,6 +12,7 @@ const AdminScreen = () => {
   const navigate = useNavigate();
   const showNotification = useNotification();
   const [users, setUsers] = useState([]);
+  const [invitations, setInvitations] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,6 +26,8 @@ const AdminScreen = () => {
       setLoading(true);
       const { data } = await apiFetch(ENDPOINTS.USERS);
       setUsers(data.map(toUserView));
+      const { data: invites } = await apiFetch(ENDPOINTS.INVITATIONS);
+      setInvitations(invites);
       setError(null);
     } catch (err) {
       console.error('Error fetching users:', err);
@@ -67,48 +70,35 @@ const AdminScreen = () => {
 
   const handleSaveUser = async (userData) => {
     try {
-      const url = editingUser 
-        ? ENDPOINTS.USER(editingUser.id) 
-        : ENDPOINTS.USERS;
-      
-      const method = editingUser ? 'PUT' : 'POST';
-      
-      const payload = editingUser
-        ? {
-            name: userData.name || userData.username,
-            phone_number: Number(userData.phone_number || 0),
-            designation: userData.role,
-          }
-        : {
-            cnic: Number(userData.cnic || Date.now().toString().slice(-9)),
-            name: userData.name || userData.username,
-            phone_number: Number(userData.phone_number || 0),
-            designation: userData.role,
-            account_id: userData.email || userData.username,
-            password: userData.password,
-          };
-
-      const { data } = await apiFetch(url, {
-        method: method,
-        body: JSON.stringify(payload),
-      });
-
       if (editingUser) {
-        setUsers(users.map(user => 
-          user.id === editingUser.id ? toUserView({ ...data, account_id: editingUser.email }) : user
-        ));
+        await apiFetch(ENDPOINTS.USER(editingUser.id), {
+          method: 'PUT',
+          body: JSON.stringify({ name: userData.name,
+            phone_number: Number(userData.phone_number), designation: userData.role }),
+        });
       } else {
-        setUsers([...users, toUserView({ ...data, account_id: payload.account_id })]);
+        await apiFetch(ENDPOINTS.INVITATIONS, {
+          method: 'POST',
+          body: JSON.stringify({ email: userData.email.trim(), name: userData.name,
+            cnic: Number(userData.cnic), phone_number: Number(userData.phone_number),
+            designation: userData.role }),
+        });
       }
-
+      showNotification(editingUser ? 'User updated.' : 'Invitation sent. Link expires in 24 hours.');
       setIsModalOpen(false);
       setEditingUser(null);
-      setError(null);
-      showNotification(editingUser ? 'User updated successfully.' : 'User added successfully.');
+      await fetchUsers();
     } catch (err) {
-      console.error('Error saving user:', err);
-      showNotification('Failed to save user.', 'error');
+      showNotification(err.message || 'Unable to save user.', 'error');
+      await fetchUsers();
     }
+  };
+
+  const revokeInvitation = async (id) => {
+    try {
+      await apiFetch(ENDPOINTS.REVOKE_INVITATION(id), { method: 'POST' });
+      await fetchUsers();
+    } catch (err) { showNotification(err.message, 'error'); }
   };
 
   const handleCloseModal = () => {
@@ -157,6 +147,23 @@ const AdminScreen = () => {
           onRefresh={handleRefresh}
         />
         
+        <section aria-label="Invitations">
+          <h2>Invitations</h2>
+          <p>To resend an expired or revoked invitation, invite the user again. Revoke a pending invitation before replacing it.</p>
+          {invitations.length === 0 && <p>No invitations yet.</p>}
+          <ul>
+            {invitations.map((invite) => (
+              <li key={invite.invite_id}>
+                {invite.name} — {invite.invite_email} — {invite.status}
+                {' '} (expires {new Date(invite.expires_at).toLocaleString()})
+                {invite.status === 'pending' && (
+                  <button onClick={() => revokeInvitation(invite.invite_id)}>Revoke</button>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+
         {isModalOpen && (
           <UserModal
             user={editingUser}

@@ -26,7 +26,7 @@ const LoginForm = ({ onSubmit, isLoading }) => {
     // The parent (LoginPage) will handle the API call
     const loginData = {
       username: username.trim(),
-      password: password.trim()
+      password: password
     };
 
     console.log('LoginForm - Submitting credentials:', {
@@ -63,7 +63,7 @@ const LoginForm = ({ onSubmit, isLoading }) => {
       
       <form onSubmit={handleSubmit}>
         <InputField
-          label="Username"
+          label="Email or existing username"
           type="text"
           placeholder="Enter your username"
           value={username}

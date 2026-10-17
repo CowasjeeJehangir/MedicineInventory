@@ -3,27 +3,21 @@ import InputField from './InputField';
 
 const UserModal = ({ user, onSave, onClose }) => {
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
     name: '',
     cnic: '',
     phone_number: '',
-    password: '',
-    role: 'Staff',
-    status: 'Active'
+    role: 'Staff'
   });
 
   useEffect(() => {
     if (user) {
       setFormData({
-        username: user.username,
         email: user.email,
         name: user.name || user.username,
         cnic: user.cnic || '',
         phone_number: user.phone_number || '',
-        password: '',
-        role: user.role,
-        status: user.status
+        role: user.role
       });
     }
   }, [user]);
@@ -44,7 +38,7 @@ const UserModal = ({ user, onSave, onClose }) => {
     <div className="modal-overlay">
       <div className="modal-content">
         <div className="modal-header">
-          <h3>{user ? 'Edit User' : 'Add New User'}</h3>
+          <h3>{user ? 'Edit User' : 'Invite New User'}</h3>
           <button className="close-btn" onClick={onClose}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" strokeWidth="2"/>
@@ -56,21 +50,13 @@ const UserModal = ({ user, onSave, onClose }) => {
         <form onSubmit={handleSubmit}>
           <div className="form-row">
             <InputField
-              label="Username"
-              type="text"
-              placeholder="Enter username"
-              value={formData.username}
-              onChange={(e) => handleChange('username', e.target.value)}
-              required
-            />
-
-            <InputField
-              label="Account ID"
-              type="text"
-              placeholder="Enter login account ID"
+              label="Email"
+              type="email"
+              placeholder="Enter email address"
               value={formData.email}
               onChange={(e) => handleChange('email', e.target.value)}
               required
+              disabled={!!user}
             />
           </div>
 
@@ -108,15 +94,6 @@ const UserModal = ({ user, onSave, onClose }) => {
           </div>
 
           <div className="form-row">
-            <InputField
-              label={user ? "New Password (leave blank to keep current)" : "Password"}
-              type="password"
-              placeholder="Enter password"
-              value={formData.password}
-              onChange={(e) => handleChange('password', e.target.value)}
-              required={!user}
-            />
-
             <div className="form-group">
               <label>Role</label>
               <select 
@@ -131,27 +108,12 @@ const UserModal = ({ user, onSave, onClose }) => {
             </div>
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
-              <label>Status</label>
-              <select 
-                value={formData.status}
-                onChange={(e) => handleChange('status', e.target.value)}
-                required
-              >
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-              </select>
-            </div>
-            <div></div> {/* Empty div for spacing */}
-          </div>
-
           <div className="modal-actions">
             <button type="button" className="cancel-btn" onClick={onClose}>
               Cancel
             </button>
             <button type="submit" className="save-btn">
-              {user ? 'Update User' : 'Add User'}
+              {user ? 'Update User' : 'Send Invitation'}
             </button>
           </div>
         </form>
