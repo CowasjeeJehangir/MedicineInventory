@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import UserList from '../components/UserList';
 import UserModal from '../components/UserModal';
+import InvitationShare from '../components/InvitationShare';
 import '../styles/AdminScreen.css';
 import { ENDPOINTS, apiFetch, toUserView } from '../config/api';
 import { useNotification } from '../components/NotificationProvider';
@@ -13,12 +14,11 @@ const AdminScreen = () => {
   const showNotification = useNotification();
   const [users, setUsers] = useState([]);
   const [invitations, setInvitations] = useState([]);
+  const [createdInvitation, setCreatedInvitation] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  // API base URL - adjust this to match your Flask server
 
   // Fetch users from API
   const fetchUsers = async () => {
@@ -77,14 +77,15 @@ const AdminScreen = () => {
             phone_number: Number(userData.phone_number), designation: userData.role }),
         });
       } else {
-        await apiFetch(ENDPOINTS.INVITATIONS, {
+        const { data } = await apiFetch(ENDPOINTS.INVITATIONS, {
           method: 'POST',
           body: JSON.stringify({ email: userData.email.trim(), name: userData.name,
             cnic: Number(userData.cnic), phone_number: Number(userData.phone_number),
             designation: userData.role }),
         });
+        setCreatedInvitation(data);
       }
-      showNotification(editingUser ? 'User updated.' : 'Invitation sent. Link expires in 24 hours.');
+      showNotification(editingUser ? 'User updated.' : 'Invitation ready. Copy the link or open an email draft.');
       setIsModalOpen(false);
       setEditingUser(null);
       await fetchUsers();
@@ -97,6 +98,7 @@ const AdminScreen = () => {
   const revokeInvitation = async (id) => {
     try {
       await apiFetch(ENDPOINTS.REVOKE_INVITATION(id), { method: 'POST' });
+      if (createdInvitation?.invite_id === id) setCreatedInvitation(null);
       await fetchUsers();
     } catch (err) { showNotification(err.message, 'error'); }
   };
@@ -129,7 +131,7 @@ const AdminScreen = () => {
       <div className="admin-card">
         <Header />
         <button className="admin-back-button" onClick={() => navigate('/dashboard')}>← Back to dashboard</button>
-        
+
         {error && (
           <div className="error-container">
             <p className="error-message">Error: {error}</p>
@@ -138,7 +140,11 @@ const AdminScreen = () => {
             </button>
           </div>
         )}
-        
+
+        {createdInvitation && (
+          <InvitationShare invitation={createdInvitation} onClose={() => setCreatedInvitation(null)} />
+        )}
+
         <UserList 
           users={users}
           onAddUser={handleAddUser}
@@ -146,10 +152,10 @@ const AdminScreen = () => {
           onDeleteUser={handleDeleteUser}
           onRefresh={handleRefresh}
         />
-        
+
         <section aria-label="Invitations">
           <h2>Invitations</h2>
-          <p>To resend an expired or revoked invitation, invite the user again. Revoke a pending invitation before replacing it.</p>
+          <p>Invitations do not send email automatically. Share the setup link using an email draft or copy it. To replace a lost link, revoke the pending invitation and invite the user again.</p>
           {invitations.length === 0 && <p>No invitations yet.</p>}
           <ul>
             {invitations.map((invite) => (

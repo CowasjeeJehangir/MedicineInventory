@@ -11,9 +11,9 @@ const AddMedicineForm = ({ onSave }) => {
   const showNotification = useNotification();
 
   const handleSave = async (formData) => {
-    console.log('=== SAVING MEDICINE ===');
-    console.log('Form data:', formData);
+
     
+
     try {
       const medicinePayload = {
         name: formData.name,
@@ -52,7 +52,7 @@ const AddMedicineForm = ({ onSave }) => {
   };
 
   const handleCancel = () => {
-    console.log('Cancel operation');
+
     navigate('/medicine-stock'); // ✅ Redirect to dashboard
   };
 

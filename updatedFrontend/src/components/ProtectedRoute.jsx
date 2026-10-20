@@ -12,25 +12,22 @@ const ProtectedRoute = ({ children, requiredRole }) => {
         // Get user data from localStorage - FIXED: using 'userData' not 'user'
         const userData = localStorage.getItem('userData');
         const authToken = localStorage.getItem('authToken');
+
         
-        console.log('ProtectedRoute - Checking auth:', {
-          hasUserData: !!userData,
-          hasAuthToken: !!authToken
-        });
-        
+
         if (!userData || !authToken) {
-          console.log('ProtectedRoute - No user data or auth token found');
+
           setIsAuthenticated(false);
           setIsLoading(false);
           return;
         }
 
         const parsedUser = JSON.parse(userData);
-        console.log('ProtectedRoute - Parsed user:', parsedUser);
+
         
         // Validate that user object has required fields
         if (!parsedUser.staff_id || !parsedUser.designation || !parsedUser.account_id) {
-          console.log('ProtectedRoute - Invalid user data structure');
+
           localStorage.removeItem('userData');
           localStorage.removeItem('authToken');
           setIsAuthenticated(false);
@@ -41,7 +38,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
         // If we get here, user is authenticated
         setUser(parsedUser);
         setIsAuthenticated(true);
-        console.log('ProtectedRoute - User authenticated successfully');
+
         
       } catch (error) {
         console.error('ProtectedRoute - Authentication check failed:', error);
@@ -87,29 +84,25 @@ const ProtectedRoute = ({ children, requiredRole }) => {
 
   // If authentication failed, redirect to login
   if (!isAuthenticated || !user) {
-    console.log('ProtectedRoute - User not authenticated, redirecting to login');
+
     return <Navigate to="/login" replace />;
   }
 
   // Check role-based access
   if (requiredRole) {
-    console.log('ProtectedRoute - Checking role access:', {
-      required: requiredRole,
-      userHas: user.designation
-    });
+
     
     // Case-insensitive role comparison
     const userRole = user.designation?.toLowerCase();
     const requiredRoleLower = requiredRole?.toLowerCase();
-    
+
     if (userRole !== requiredRoleLower) {
-      console.log(`ProtectedRoute - Access denied. Required: ${requiredRole}, User has: ${user.designation}`);
+
       // Redirect to dashboard with access denied message
       return <Navigate to="/dashboard" replace />;
     }
   }
 
-  console.log('ProtectedRoute - Access granted');
   // User is authenticated and authorized
   return children;
 };

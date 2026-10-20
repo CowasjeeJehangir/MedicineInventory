@@ -15,21 +15,20 @@ const StockRegisterPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   // Fetch medicines from backend
   const fetchMedicines = async () => {
     try {
       setLoading(true);
       setError(null);
+
       
-      console.log('Fetching medicines from API...');
       const { data } = await apiFetch(ENDPOINTS.INVENTORY);
+
       
-      console.log('API Response:', data);
-      
+
       if (Array.isArray(data)) {
         const transformedMedicines = data.map(item => {
-          console.log('Processing item:', item);
+
           
           return {
             id: item.id,
@@ -51,8 +50,8 @@ const StockRegisterPage = () => {
             restockThreshold: item.restock_threshold || 10
           };
         });
+
         
-        console.log('Transformed medicines:', transformedMedicines);
         setMedicines(transformedMedicines);
       } else {
         setError('Failed to fetch medicines');
@@ -219,7 +218,7 @@ const StockRegisterPage = () => {
           >
             <RefreshCw size={18} /> Refresh
           </button>
-          
+
           <button 
             className={styles.addButton} 
             onClick={() => navigate('/add-medicine')}

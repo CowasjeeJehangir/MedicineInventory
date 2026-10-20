@@ -11,7 +11,7 @@ const AddPatientForm = ({ onSave }) => {
   const showNotification = useNotification();
 
   const handleSave = async (patientData) => {
-    console.log('Save patient:', patientData);
+
     try {
       await apiFetch(ENDPOINTS.PATIENTS, {
         method: 'POST',
@@ -33,7 +33,7 @@ const AddPatientForm = ({ onSave }) => {
   };
 
   const handleCancel = () => {
-    console.log('Cancel operation');
+
     navigate('/pharmacy-patientlist'); // Redirect to patient list
   };
 

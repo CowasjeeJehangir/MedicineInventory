@@ -29,11 +29,6 @@ const LoginForm = ({ onSubmit, isLoading }) => {
       password: password
     };
 
-    console.log('LoginForm - Submitting credentials:', {
-      username: loginData.username,
-      password: '[PROVIDED]'
-    });
-
     // Call the parent's onSubmit with login credentials
     onSubmit(loginData);
   };
@@ -54,13 +49,13 @@ const LoginForm = ({ onSubmit, isLoading }) => {
         </div>
         <span className="form-title">Secure Login</span>
       </div>
-      
+
       {error && (
         <div className="error-message">
           {error}
         </div>
       )}
-      
+
       <form onSubmit={handleSubmit}>
         <InputField
           label="Email or existing username"

@@ -22,27 +22,27 @@ const Dashboard = () => {
     // Get user data from localStorage
     const storedUserData = localStorage.getItem('userData');
     const authToken = localStorage.getItem('authToken');
+
     
-    console.log('Raw userData from localStorage:', storedUserData);
-    console.log('Auth token:', authToken);
+
     
     if (storedUserData && authToken) {
       try {
         const user = JSON.parse(storedUserData);
-        console.log('Parsed user data:', user);
-        console.log('Available keys:', Object.keys(user));
+
         
+
         setUserData(user);
-        
+
         // Check for role in both 'designation' and 'role' fields
         const role = user.designation || user.role;
-        console.log('Extracted role:', role);
-        console.log('Role type:', typeof role);
+
         
+
         if (role) {
           setUserRole(role.toLowerCase().trim()); // Normalize the role
         }
-        
+
         setLoading(false);
       } catch (error) {
         console.error('Error parsing user data:', error);
@@ -53,7 +53,7 @@ const Dashboard = () => {
         navigate('/login');
       }
     } else {
-      console.log('No userData or authToken found - redirecting to login');
+
       setLoading(false);
       navigate('/login');
     }
@@ -63,7 +63,7 @@ const Dashboard = () => {
     // Clear all stored data
     localStorage.removeItem('userData');
     localStorage.removeItem('authToken');
-    
+
     // Navigate to login
     navigate('/login');
   };
@@ -123,7 +123,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-page">
       <Header />
-    
+
       <div className="dashboard-wrapper">
         {/* Enhanced Welcome Section */}
         <div className="welcome-section">
@@ -169,7 +169,7 @@ const Dashboard = () => {
               className="dashboard-card admin-card"
               style={{ '--card-gradient': adminCard.gradient }}
               onClick={() => {
-                console.log('Admin card clicked - navigating to:', adminCard.route);
+
                 navigate(adminCard.route);
               }}
               tabIndex="0"

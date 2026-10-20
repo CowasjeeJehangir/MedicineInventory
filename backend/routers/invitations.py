@@ -4,7 +4,7 @@ import secrets
 from datetime import datetime, timedelta, timezone
 from urllib.parse import urlencode
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy import or_, func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -12,9 +12,8 @@ from sqlalchemy.orm import Session
 from auth.dependencies import require_admin, get_password_hash
 from db import get_db
 from models.staff import Staff, Credentials, Invitation
-from schemas.schemas import (InvitationCreate, InvitationResponse,
+from schemas.schemas import (InvitationCreate, InvitationResponse, InvitationCreatedResponse,
                              InvitationToken, PasswordSetupRequest)
-from services.invitation_email import send_invitation_email
 
 router = APIRouter()
 
@@ -52,8 +51,8 @@ def list_invitations(db: Session = Depends(get_db),
     return db.query(Invitation).order_by(Invitation.invite_id.desc()).all()
 
 
-@router.post("/", response_model=InvitationResponse, status_code=201)
-def create_invitation(payload: InvitationCreate, db: Session = Depends(get_db),
+@router.post("/", response_model=InvitationCreatedResponse, status_code=201)
+def create_invitation(payload: InvitationCreate, response: Response, db: Session = Depends(get_db),
                       admin: Staff = Depends(require_admin)):
     expire_pending(db)
     if (db.query(Staff).filter(or_(Staff.cnic == payload.cnic,
@@ -82,13 +81,11 @@ def create_invitation(payload: InvitationCreate, db: Session = Depends(get_db),
         raise HTTPException(409, "A conflicting staff member or invitation already exists.")
     url = os.getenv("FRONTEND_URL", "http://localhost:3000").rstrip("/")
     url += "/set-password#" + urlencode({"token": token})
-    try:
-        send_invitation_email(invitation.invite_email, url)
-    except Exception:
-        invitation.status = "revoked"
-        db.commit()
-        raise HTTPException(502, "Invitation email failed. Check SMTP configuration and invite again.")
-    return invitation
+    # Only the creating admin receives the raw link. Store its hash, never the URL.
+    response.headers["Cache-Control"] = "no-store"
+    response.headers["Pragma"] = "no-cache"
+    result = InvitationResponse.model_validate(invitation).model_dump()
+    return {**result, "setup_url": url}
 
 
 @router.post("/validate")

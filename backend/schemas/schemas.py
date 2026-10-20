@@ -21,10 +21,6 @@ class StaffBase(BaseModel):
     phone_number: int
     designation: str
 
-class StaffCreate(StaffBase):
-    account_id: str
-    password: str
-
 class StaffUpdate(BaseModel):
     name: Optional[str] = None
     phone_number: Optional[int] = None
@@ -265,6 +261,10 @@ class InvitationResponse(BaseModel):
     status: str
     expires_at: datetime
     model_config = ConfigDict(from_attributes=True)
+
+
+class InvitationCreatedResponse(InvitationResponse):
+    setup_url: str
 
 
 class InvitationToken(BaseModel):

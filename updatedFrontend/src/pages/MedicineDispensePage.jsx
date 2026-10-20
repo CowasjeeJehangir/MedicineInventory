@@ -10,7 +10,7 @@ const MedicineDispensePage = () => {
   const navigate = useNavigate();
   const showNotification = useNotification();
   const handleInventorySubmit = (inventoryData) => {
-    console.log('Inventory submitted:', inventoryData);
+
     // Here you would typically send the data to your backend
     showNotification('Medicine inventory saved successfully.');
   };

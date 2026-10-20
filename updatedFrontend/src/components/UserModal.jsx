@@ -113,7 +113,7 @@ const UserModal = ({ user, onSave, onClose }) => {
               Cancel
             </button>
             <button type="submit" className="save-btn">
-              {user ? 'Update User' : 'Send Invitation'}
+              {user ? 'Update User' : 'Create Invitation'}
             </button>
           </div>
         </form>

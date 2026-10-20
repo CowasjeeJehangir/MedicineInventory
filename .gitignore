@@ -14,12 +14,15 @@ updatedFrontend/node_modules/
 # Databases
 backend/*.db
 
-# Test files
-backend/test_db_setup.py
-
 # OS files
 .DS_Store
 # Local verification artifacts
 updatedFrontend/build/
 
 !backend/.env.example
+
+# Local backend virtual environment
+backend/.venv/
+
+# Local database files
+*.db
