@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useId } from 'react';
 
-const InputField = ({ label, type, placeholder, value, onChange, icon, showPasswordToggle = false, required = false, disabled = false }) => {
+const InputField = ({ label, type, placeholder, value, onChange, icon, showPasswordToggle = false, required = false, disabled = false, error, hint, id, ...inputProps }) => {
+  const generatedId = useId();
+  const inputId = id || generatedId;
   const [showPassword, setShowPassword] = useState(false);
 
   const inputType = type === 'password' && showPassword ? 'text' : type;
@@ -44,12 +46,16 @@ const InputField = ({ label, type, placeholder, value, onChange, icon, showPassw
 
   return (
     <div className="form-group">
-      <label>{label}</label>
+      <label htmlFor={inputId}>{label}{required ? " *" : ""}</label>
       <div className="input-container">
         <div className="input-icon">
           {getIcon(icon)}
         </div>
         <input
+          {...inputProps}
+          id={inputId}
+          aria-invalid={!!error}
+          aria-describedby={error || hint ? `${inputId}-help` : undefined}
           type={inputType}
           placeholder={placeholder}
           value={value}
@@ -67,6 +73,7 @@ const InputField = ({ label, type, placeholder, value, onChange, icon, showPassw
           </button>
         )}
       </div>
+      {(error || hint) && <small id={`${inputId}-help`} className={error ? "field-error" : "field-hint"} role={error ? "alert" : undefined}>{error || hint}</small>}
     </div>
   );
 };

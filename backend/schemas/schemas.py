@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field, ConfigDict, EmailStr, field_validator
 from typing import Optional, Literal
 from datetime import datetime
+from schemas.validation import validate_cnic, validate_phone
 
 # ============= Authentication Schemas =============
 class Token(BaseModel):
@@ -22,6 +23,14 @@ class StaffBase(BaseModel):
     designation: str
 
 class StaffUpdate(BaseModel):
+    @field_validator("phone_number", mode="before")
+    @classmethod
+    def phone_format(cls, value):
+        result = validate_phone(value)
+        if result is None:
+            raise ValueError("Mobile number is required.")
+        return result
+
     name: Optional[str] = None
     phone_number: Optional[int] = None
     designation: Optional[str] = None
@@ -46,9 +55,12 @@ class PatientBase(BaseModel):
     medicines: Optional[str] = None
 
 class PatientCreate(PatientBase):
-    pass
+    _cnic_format = field_validator("cnic", mode="before")(validate_cnic)
+    _phone_format = field_validator("phone_number", mode="before")(validate_phone)
 
 class PatientUpdate(BaseModel):
+    _phone_format = field_validator("phone_number", mode="before")(validate_phone)
+
     name: Optional[str] = None
     phone_number: Optional[int] = None
     ward_id: Optional[int] = None
@@ -234,6 +246,9 @@ class DashboardStats(BaseModel):
 
 # ============= Invitation Schemas =============
 class InvitationCreate(BaseModel):
+    _cnic_format = field_validator("cnic", mode="before")(validate_cnic)
+    _phone_format = field_validator("phone_number", mode="before")(validate_phone)
+
     email: EmailStr
     name: str = Field(min_length=1, max_length=200)
     cnic: int = Field(gt=0)

@@ -17,19 +17,14 @@ export default function InvitationShare({ invitation, onClose }) {
 
   return (
     <section className="invitation-share" aria-label="Share setup invitation">
-      <h2>Invitation ready</h2>
-      <p>Share this link privately with {invitation.invite_email}. No email has been sent.</p>
-      <p>Expires {new Date(invitation.expires_at).toLocaleString()}.</p>
-      <label htmlFor="invitation-setup-link">Setup link</label>
-      <input id="invitation-setup-link" type="text" readOnly value={invitation.setup_url}
-        onFocus={(event) => event.target.select()} />
-      <div className="invitation-share-actions">
-        <button type="button" onClick={copyLink}>Copy setup link</button>
-        <a href={draftUrl}>Open email draft</a>
-        <button type="button" onClick={onClose}>Dismiss</button>
-      </div>
-      <p>Open email draft uses your default email app. Review the draft and click Send yourself. Set Outlook as your default email app to use it here.</p>
-      <p>Save or share the link before leaving this page. If you lose it, revoke the invitation and create a new one.</p>
+      <div className="share-heading"><h2>Setup link ready</h2><button type="button" className="admin-icon-button" aria-label="Dismiss setup link" onClick={onClose}>×</button></div>
+      <p>Share privately with <strong>{invitation.invite_email}</strong>. No email has been sent.</p>
+      <label htmlFor="invitation-setup-link">Private setup link</label>
+      <div className="share-link-row"><input id="invitation-setup-link" type="text" readOnly value={invitation.setup_url} onFocus={event => event.target.select()} />
+        <button type="button" className="admin-button secondary" onClick={copyLink}>Copy link</button></div>
+      <div className="invitation-share-actions"><a className="admin-button primary" href={draftUrl}>Open email draft</a>
+        <span className="admin-muted">Expires {new Date(invitation.expires_at).toLocaleString()}</span></div>
+      <p className="share-note">Review and send in your email app. Save this link before leaving; replace a lost link by revoking the invitation.</p>
       {copyStatus && <p role="status">{copyStatus}</p>}
     </section>
   );

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import InputField from './InputField';
+import { cnicError, phoneError } from '../utils/contactValidation';
 import ActionButtons from './ActionButtons';
 
 const PatientForm = ({ onSave, onCancel }) => {
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     name: '',
     patientId: generatePatientId(),
@@ -29,6 +31,9 @@ const PatientForm = ({ onSave, onCancel }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const next = { cnic: cnicError(formData.cnic, false), phone_number: phoneError(formData.phone_number, false) };
+    setErrors(next);
+    if (Object.values(next).some(Boolean)) return;
     onSave(formData);
   };
 
@@ -75,8 +80,10 @@ const PatientForm = ({ onSave, onCancel }) => {
 
           <InputField
             label="Phone Number"
-            type="number"
-            placeholder="Enter phone number"
+            type="tel"
+            error={errors.phone_number}
+            hint="Optional: 03001234567 or +923001234567."
+            placeholder="03001234567"
             value={formData.phone_number}
             onChange={(e) => handleChange('phone_number', e.target.value)}
           />
@@ -85,8 +92,12 @@ const PatientForm = ({ onSave, onCancel }) => {
         <div className="form-row">
           <InputField
             label="CNIC"
-            type="number"
-            placeholder="Enter CNIC"
+            type="text"
+            inputMode="numeric"
+            maxLength={15}
+            error={errors.cnic}
+            hint="Optional: 13 digits, with or without hyphens."
+            placeholder="42101-1234567-1"
             value={formData.cnic}
             onChange={(e) => handleChange('cnic', e.target.value)}
           />

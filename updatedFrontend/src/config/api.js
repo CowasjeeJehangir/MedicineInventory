@@ -55,7 +55,8 @@ export const apiFetch = async (url, options = {}) => {
 
   if (!response.ok) {
     const message = data?.detail || data?.message || `Request failed with status ${response.status}`;
-    throw new Error(typeof message === 'string' ? message : 'Please check the submitted fields.');
+    const detail = Array.isArray(message) ? message.map(item => `${item.loc?.slice(-1)[0] || 'Field'}: ${item.msg.replace(/^Value error, /, '')}`).join(' ') : message;
+    throw new Error(typeof detail === 'string' ? detail : 'Please check the submitted fields.');
   }
 
   return { ok: true, status: response.status, data };
