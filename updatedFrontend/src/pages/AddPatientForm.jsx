@@ -17,8 +17,8 @@ const AddPatientForm = ({ onSave }) => {
         method: 'POST',
         body: JSON.stringify({
           name: patientData.name,
-          cnic: patientData.cnic ? Number(patientData.cnic) : null,
-          phone_number: patientData.phone_number ? Number(patientData.phone_number) : null,
+          cnic: patientData.cnic ? patientData.cnic : null,
+          phone_number: patientData.phone_number ? patientData.phone_number : null,
           ward_code: patientData.ward,
           diagnosis: patientData.diagnosis || null,
           medicines: patientData.medicines || null,

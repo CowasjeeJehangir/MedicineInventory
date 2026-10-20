@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Mail, Plus, ArrowLeft, RefreshCw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -19,6 +20,11 @@ const AdminScreen = () => {
   const [editingUser, setEditingUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [invitationFilter, setInvitationFilter] = useState('pending');
+  const [revoking, setRevoking] = useState(null);
+  const invitationState = invite => invite.status === 'pending' && new Date(invite.expires_at) <= new Date() ? 'expired' : invite.status;
+  const pendingCount = invitations.filter(invite => invitationState(invite) === 'pending').length;
+  const visibleInvitations = invitations.filter(invite => invitationFilter === 'all' || invitationState(invite) === 'pending');
 
   // Fetch users from API
   const fetchUsers = async () => {
@@ -31,7 +37,7 @@ const AdminScreen = () => {
       setError(null);
     } catch (err) {
       console.error('Error fetching users:', err);
-      setError('Failed to connect to server');
+      setError(err.message || 'Unable to load user management.');
     } finally {
       setLoading(false);
     }
@@ -74,13 +80,13 @@ const AdminScreen = () => {
         await apiFetch(ENDPOINTS.USER(editingUser.id), {
           method: 'PUT',
           body: JSON.stringify({ name: userData.name,
-            phone_number: Number(userData.phone_number), designation: userData.role }),
+            phone_number: userData.phone_number, designation: userData.role }),
         });
       } else {
         const { data } = await apiFetch(ENDPOINTS.INVITATIONS, {
           method: 'POST',
           body: JSON.stringify({ email: userData.email.trim(), name: userData.name,
-            cnic: Number(userData.cnic), phone_number: Number(userData.phone_number),
+            cnic: userData.cnic, phone_number: userData.phone_number,
             designation: userData.role }),
         });
         setCreatedInvitation(data);
@@ -91,16 +97,19 @@ const AdminScreen = () => {
       await fetchUsers();
     } catch (err) {
       showNotification(err.message || 'Unable to save user.', 'error');
-      await fetchUsers();
+      throw err;
     }
   };
 
   const revokeInvitation = async (id) => {
+    if (!window.confirm('Revoke this invitation? Its setup link will stop working.')) return;
+    setRevoking(id);
     try {
       await apiFetch(ENDPOINTS.REVOKE_INVITATION(id), { method: 'POST' });
       if (createdInvitation?.invite_id === id) setCreatedInvitation(null);
       await fetchUsers();
     } catch (err) { showNotification(err.message, 'error'); }
+    finally { setRevoking(null); }
   };
 
   const handleCloseModal = () => {
@@ -112,72 +121,45 @@ const AdminScreen = () => {
     fetchUsers();
   };
 
-  if (loading) {
-    return (
-      <div className="admin-container">
-        <div className="admin-card">
-          <Header />
-          <button className="admin-back-button" onClick={() => navigate('/dashboard')}>← Back to dashboard</button>
-          <div className="loading-container">
-            <p>Loading users...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="admin-container">
       <div className="admin-card">
         <Header />
-        <button className="admin-back-button" onClick={() => navigate('/dashboard')}>← Back to dashboard</button>
-
-        {error && (
-          <div className="error-container">
-            <p className="error-message">Error: {error}</p>
-            <button onClick={handleRefresh} className="retry-button">
-              Retry
-            </button>
+        <main className="admin-content">
+          <button className="admin-back-button" onClick={() => navigate('/dashboard')}><ArrowLeft size={15} /> Back to dashboard</button>
+          <div className="admin-page-heading">
+            <div><p className="admin-eyebrow">TEAM & ACCESS</p><h1>User management</h1><p>Manage staff access and share secure setup invitations.</p></div>
+            <div className="admin-heading-actions"><button className="admin-icon-button" aria-label="Refresh user management" disabled={loading} onClick={handleRefresh}><RefreshCw size={18} /></button>
+              <button className="admin-button primary" onClick={handleAddUser}><Plus size={17} /> Invite user</button></div>
           </div>
-        )}
-
-        {createdInvitation && (
-          <InvitationShare invitation={createdInvitation} onClose={() => setCreatedInvitation(null)} />
-        )}
-
-        <UserList 
-          users={users}
-          onAddUser={handleAddUser}
-          onEditUser={handleEditUser}
-          onDeleteUser={handleDeleteUser}
-          onRefresh={handleRefresh}
-        />
-
-        <section aria-label="Invitations">
-          <h2>Invitations</h2>
-          <p>Invitations do not send email automatically. Share the setup link using an email draft or copy it. To replace a lost link, revoke the pending invitation and invite the user again.</p>
-          {invitations.length === 0 && <p>No invitations yet.</p>}
-          <ul>
-            {invitations.map((invite) => (
-              <li key={invite.invite_id}>
-                {invite.name} — {invite.invite_email} — {invite.status}
-                {' '} (expires {new Date(invite.expires_at).toLocaleString()})
-                {invite.status === 'pending' && (
-                  <button onClick={() => revokeInvitation(invite.invite_id)}>Revoke</button>
-                )}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {isModalOpen && (
-          <UserModal
-            user={editingUser}
-            onSave={handleSaveUser}
-            onClose={handleCloseModal}
-          />
-        )}
-
+          {error && <div className="admin-error" role="alert">{error}<button className="admin-button secondary" onClick={handleRefresh}>Retry</button></div>}
+          {createdInvitation && <InvitationShare invitation={createdInvitation} onClose={() => setCreatedInvitation(null)} />}
+          {loading && <p className="admin-muted" role="status">Updating staff and invitations…</p>}
+          <UserList users={users} onEditUser={handleEditUser} onDeleteUser={handleDeleteUser} />
+          <section className="admin-panel" aria-labelledby="invitations-heading">
+            <div className="admin-panel-header">
+              <div><div className="admin-section-title"><Mail size={19} /><h2 id="invitations-heading">Invitations</h2><span className="admin-count">{pendingCount} pending</span></div>
+                <p className="admin-muted">Setup links expire in 24 hours. Share them privately using an email draft.</p></div>
+              <div className="admin-filter" aria-label="Filter invitations">
+                <button aria-pressed={invitationFilter === 'pending'} onClick={() => setInvitationFilter('pending')}>Pending</button>
+                <button aria-pressed={invitationFilter === 'all'} onClick={() => setInvitationFilter('all')}>All history</button>
+              </div>
+            </div>
+            <div className="admin-table-scroll"><table className="admin-table">
+              <thead><tr><th scope="col">Recipient</th><th scope="col">Status</th><th scope="col">Link expires</th><th scope="col" className="admin-align-right">Action</th></tr></thead>
+              <tbody>{visibleInvitations.map(invite => {
+                const status = invitationState(invite);
+                return <tr key={invite.invite_id}>
+                  <td><strong>{invite.name}</strong><span className="admin-email">{invite.invite_email}</span></td>
+                  <td><span className={`admin-badge state-${status}`}>{status}</span></td>
+                  <td className="admin-date">{new Date(invite.expires_at).toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</td>
+                  <td className="admin-align-right">{status === 'pending' ? <button className="admin-button revoke" disabled={revoking === invite.invite_id} onClick={() => revokeInvitation(invite.invite_id)}>{revoking === invite.invite_id ? 'Revoking…' : 'Revoke'}</button> : <span className="admin-muted">—</span>}</td>
+                </tr>;
+              })}{visibleInvitations.length === 0 && <tr><td colSpan={4}><div className="admin-empty"><Mail size={26} /><strong>{invitationFilter === 'pending' ? 'No pending invitations' : 'No invitations yet'}</strong><p>{invitationFilter === 'pending' ? 'New invitations will appear here until setup is complete.' : 'Invite a staff member to create their setup link.'}</p></div></td></tr>}</tbody>
+            </table></div>
+          </section>
+        </main>
+        {isModalOpen && <UserModal user={editingUser} onSave={handleSaveUser} onClose={handleCloseModal} />}
         <Footer />
       </div>
     </div>
