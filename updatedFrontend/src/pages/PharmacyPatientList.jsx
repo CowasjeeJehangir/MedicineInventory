@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Search, UserPlus } from "lucide-react";
+import { ArrowLeft, Search, UserPlus } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -86,7 +86,7 @@ const PharmacyPatientList = () => {
         className={styles.backButton}
         onClick={() => navigate('/dashboard')}
       >
-        ⬅ Back
+        <ArrowLeft size={15} aria-hidden="true" /> Back to dashboard
       </button>
 
       {/* Controls */}

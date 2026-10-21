@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Search, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Plus, Edit2, Trash2, Search, RefreshCw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -151,7 +151,7 @@ const StockRegisterPage = () => {
         className={styles.backButton}
         onClick={() => navigate('/dashboard')}
       >
-        ← Back
+        <ArrowLeft size={15} aria-hidden="true" /> Back to dashboard
       </button>
 
       {/* Error Display */}

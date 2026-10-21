@@ -257,7 +257,7 @@
 .inventoryContainer > :global(.header) { max-width:1160px; margin:0 auto; border:1px solid var(--color-border); border-radius:20px; }
 .inventoryContainer > :global(.footer) { max-width:1160px; margin:24px auto 0; border:1px solid var(--color-border); border-radius:12px; }
 .controls, .stats, .inventoryTable { width:100%; max-width:1160px; }
-.backButton { position:static; display:block; margin:24px auto; width:max-content; padding:0; background:none; color:var(--color-muted); box-shadow:none; border-radius:4px; font-size:13px; font-weight:400; }
+.backButton { position:static; display:flex; align-items:center; gap:6px; margin:24px 0 26px; margin-left:max(0px, calc((100% - 1160px) / 2)); width:max-content; padding:0; background:none; color:var(--color-muted); box-shadow:none; border-radius:4px; font-size:13px; font-weight:400; }
 .backButton:hover { background:none; color:var(--color-primary); }
 .searchInput { border:1px solid var(--color-input-border); border-radius:8px; font-size:14px; min-height:42px; }
 .searchInput::placeholder { color:var(--color-muted); opacity:1; }
