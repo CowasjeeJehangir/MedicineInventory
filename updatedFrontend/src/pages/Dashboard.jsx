@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Users, Package, Settings, LogOut } from 'lucide-react';
 import Header from '../components/Header'; 
 import { useNavigate } from 'react-router-dom';
 import '../styles/Dashboard.css';
@@ -73,16 +74,14 @@ const Dashboard = () => {
     {
       title: 'View Patient List',
       description: 'Manage and view registered patients',
-      icon: '👥',
-      route: '/pharmacy-patientlist',
-      gradient: 'linear-gradient(135deg, #59f1aa, #41d7a8)'
+      icon: <Users size={24} />,
+      route: '/pharmacy-patientlist'
     },
     {
       title: 'Stock Register',
       description: 'Track stock levels and expiry dates',
-      icon: '📦',
-      route: '/medicine-stock',
-      gradient: 'linear-gradient(135deg, #f59fee, #e84393)'
+      icon: <Package size={24} />,
+      route: '/medicine-stock'
     }
   ];
 
@@ -90,9 +89,8 @@ const Dashboard = () => {
   const adminCard = {
     title: 'Admin Panel',
     description: 'Manage users and system settings',
-    icon: '⚙️',
-    route: '/admin-screen',
-    gradient: 'linear-gradient(135deg, #ff6b6b, #ee5a24)'
+    icon: <Settings size={24} />,
+    route: '/admin-screen'
   };
 
   // Get greeting based on time
@@ -127,7 +125,7 @@ const Dashboard = () => {
       <div className="dashboard-wrapper">
         {/* Enhanced Welcome Section */}
         <div className="welcome-section">
-          <h2>{getGreeting()}, {userData?.name || 'User'}! 👋</h2>
+          <h2>{getGreeting()}, {userData?.name || 'User'}!</h2>
           <p>Role: {userData?.designation || userData?.role || 'Unknown'}</p>
           <p>{currentTime.toLocaleDateString('en-US', { 
             weekday: 'long', 
@@ -144,16 +142,17 @@ const Dashboard = () => {
             <div
               key={index}
               className="dashboard-card"
-              style={{ '--card-gradient': card.gradient }}
               onClick={() => navigate(card.route)}
+              role="button"
               tabIndex="0"
-              onKeyPress={(e) => {
+              onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
                   navigate(card.route);
                 }
               }}
             >
-              <div className="card-icon" style={{ background: card.gradient }}>
+              <div className="card-icon">
                 {card.icon}
               </div>
               <div>
@@ -167,19 +166,20 @@ const Dashboard = () => {
           {isAdmin && (
             <div
               className="dashboard-card admin-card"
-              style={{ '--card-gradient': adminCard.gradient }}
               onClick={() => {
 
                 navigate(adminCard.route);
               }}
+              role="button"
               tabIndex="0"
-              onKeyPress={(e) => {
+              onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
                   navigate(adminCard.route);
                 }
               }}
             >
-              <div className="card-icon" style={{ background: adminCard.gradient }}>
+              <div className="card-icon">
                 {adminCard.icon}
               </div>
               <div>
@@ -198,7 +198,7 @@ const Dashboard = () => {
         onClick={handleLogout}
         aria-label="Logout"
       >
-        Logout 🚪
+        <LogOut size={16} aria-hidden="true" /> Logout
       </button>
     </div>
   );

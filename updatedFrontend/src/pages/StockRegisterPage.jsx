@@ -129,7 +129,7 @@ const StockRegisterPage = () => {
         }}>
           <div style={{ 
             border: '4px solid #f3f3f3',
-            borderTop: '4px solid #add3eb',
+            borderTop: '4px solid var(--color-primary)',
             borderRadius: '50%',
             width: '50px',
             height: '50px',
@@ -158,7 +158,7 @@ const StockRegisterPage = () => {
       {error && (
         <div style={{
           backgroundColor: '#ffebee',
-          border: '1px solid #f44336',
+          border: '1px solid var(--color-danger)',
           borderRadius: '8px',
           padding: '15px',
           margin: '20px 0',
@@ -170,7 +170,7 @@ const StockRegisterPage = () => {
           <button
             onClick={fetchMedicines}
             style={{
-              backgroundColor: '#f44336',
+              backgroundColor: 'var(--color-danger)',
               color: 'white',
               border: 'none',
               borderRadius: '4px',
@@ -203,7 +203,7 @@ const StockRegisterPage = () => {
           <button 
             onClick={fetchMedicines}
             style={{
-              backgroundColor: '#6c757d',
+              backgroundColor: 'var(--color-primary)',
               color: 'white',
               border: 'none',
               borderRadius: '8px',

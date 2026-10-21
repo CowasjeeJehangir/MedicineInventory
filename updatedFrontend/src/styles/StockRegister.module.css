@@ -1,7 +1,7 @@
 /* StockRegister.module.css - CSS Modules automatically scope these styles */
 
 .inventoryContainer {
-  background-color: white; /* <-- set background to white */
+  background-color: var(--color-page);
   min-height: 100vh;       /* ensures full-page background */         /* optional, keep your spacing */
 }
 
@@ -12,7 +12,7 @@
   border: 0;
   border-radius: 999px;
   padding: 12px 20px;
-  background: #add3eb;
+  background: var(--color-header);
   color: white;
   cursor: pointer;
   font-size: 14px;
@@ -22,7 +22,7 @@
 }
 
 .backButton:hover {
-  background: #87ceeb;
+  background: var(--color-primary);
 }
 
 .controls {
@@ -49,14 +49,14 @@
   left: 16px;
   top: 50%;
   transform: translateY(-50%);
-  color: #94a3b8;
+  color: var(--color-muted);
   pointer-events: none;
 }
 
 .searchInput {
   width: 100%;
   padding: 12px 16px 12px 45px;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--color-border);
   border-radius: 25px;
   font-size: 16px;
   transition: all 0.3s ease;
@@ -66,13 +66,13 @@
 
 .searchInput:focus {
   outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-focus-halo);
 }
 
-/* ✅ Updated flat green button */
+/* Primary action */
 .addButton {
-  background: #10b981; /* Flat green */
+  background: var(--color-success);
   color: white;
   border: none;
   padding: 12px 24px;
@@ -87,7 +87,7 @@
 }
 
 .addButton:hover {
-  background: #059669; /* Darker green */
+  background: var(--color-success);
 }
 
 .stats {
@@ -114,9 +114,9 @@
   transform: translateY(-5px);
 }
 
-.statCard.total { border-left-color: #3b82f6; }
-.statCard.low { border-left-color: #ef4444; }
-.statCard.normal { border-left-color: #10b981; }
+.statCard.total { border-left-color: var(--color-primary); }
+.statCard.low { border-left-color: var(--color-danger); }
+.statCard.normal { border-left-color: var(--color-success); }
 
 .statValue {
   font-size: 2rem;
@@ -125,7 +125,7 @@
 }
 
 .statLabel {
-  color: #64748b;
+  color: var(--color-muted);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -142,14 +142,14 @@
 }
 
 .tableHeader {
-  background: #f8fafc;
+  background: var(--color-page);
   padding: 20px;
-  border-bottom: 2px solid #e2e8f0;
+  border-bottom: 2px solid var(--color-border);
 }
 
 .tableHeader h3 {
   margin: 0;
-  color: #1e293b;
+  color: var(--color-text);
   font-size: 1.3rem;
   font-weight: 600;
 }
@@ -164,12 +164,12 @@
 }
 
 .table th {
-  background: #f8fafc;
+  background: var(--color-page);
   padding: 15px 10px;
   text-align: left;
   font-weight: 600;
-  color: #475569;
-  border-bottom: 2px solid #e2e8f0;
+  color: var(--color-label);
+  border-bottom: 2px solid var(--color-border);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -177,21 +177,21 @@
 
 .table td {
   padding: 15px 10px;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--color-subtle);
   font-size: 0.95rem;
 }
 
 .table tr:hover {
-  background: #f9fafb;
+  background: var(--color-subtle);
 }
 
 .balanceLow {
-  color: #ef4444;
+  color: var(--color-danger);
   font-weight: 600;
 }
 
 .balanceNormal {
-  color: #10b981;
+  color: var(--color-success);
   font-weight: 600;
 }
 
@@ -207,27 +207,27 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
-  color: #64748b;
+  color: var(--color-muted);
 }
 
 .actionBtn:hover {
-  background: #f1f5f9;
+  background: var(--color-subtle);
   transform: scale(1.1);
 }
 
-.actionBtn.edit:hover { color: #3b82f6; }
-.actionBtn.delete:hover { color: #ef4444; }
+.actionBtn.edit:hover { color: var(--color-primary); }
+.actionBtn.delete:hover { color: var(--color-danger); }
 
 .emptyState {
   text-align: center;
   padding: 60px 20px;
-  color: #64748b;
+  color: var(--color-muted);
 }
 
 .emptyState h3 {
   font-size: 1.5rem;
   margin-bottom: 10px;
-  color: #475569;
+  color: var(--color-label);
 }
 
 @media (max-width: 768px) {
@@ -250,4 +250,34 @@
     padding: 10px 8px;
     font-size: 0.85rem;
   }
+}
+
+/* Match the shared administration shell, including CSS Module pages. */
+.inventoryContainer { padding:28px 20px; background:var(--color-page); color:var(--color-text); }
+.inventoryContainer > :global(.header) { max-width:1160px; margin:0 auto; border:1px solid var(--color-border); border-radius:20px; }
+.inventoryContainer > :global(.footer) { max-width:1160px; margin:24px auto 0; border:1px solid var(--color-border); border-radius:12px; }
+.controls, .stats, .inventoryTable { width:100%; max-width:1160px; }
+.backButton { position:static; display:block; margin:24px auto; width:max-content; padding:0; background:none; color:var(--color-muted); box-shadow:none; border-radius:4px; font-size:13px; font-weight:400; }
+.backButton:hover { background:none; color:var(--color-primary); }
+.searchInput { border:1px solid var(--color-input-border); border-radius:8px; font-size:14px; min-height:42px; }
+.searchInput::placeholder { color:var(--color-muted); opacity:1; }
+.addButton { background:var(--color-primary); color:white; border-radius:8px; font-size:13px; min-height:38px; padding:10px 16px; }
+.addButton:hover { background:var(--color-primary-hover); }
+.statCard { border:1px solid var(--color-border); border-left-width:4px; border-radius:12px; box-shadow:none; text-align:left; }
+.statCard:hover { transform:none; }
+.statValue { font-size:29px; letter-spacing:-.7px; color:var(--color-text); }
+.statLabel { font-size:11px; color:var(--color-muted); }
+.inventoryTable { border:1px solid var(--color-border); border-radius:12px; box-shadow:none; }
+.tableHeader { padding:20px 22px; background:white; border-bottom:1px solid var(--color-border); gap:16px; flex-wrap:wrap; }
+.tableHeader h3 { font-size:17px; letter-spacing:-.2px; color:#3e3421; }
+.table th { background:var(--color-subtle); padding:12px 16px; font-size:11px; text-transform:none; letter-spacing:0; border-bottom:1px solid var(--color-border); }
+.table td { padding:17px 16px; font-size:13px; border-color:#eee8dc; }
+.table tr:hover { background:#fffdf8; }
+.actionBtn { border:1px solid var(--color-border); background:white; }
+.actionBtn:hover { transform:none; background:var(--color-subtle); }
+@media(max-width:700px) {
+ .inventoryContainer { padding:12px; }
+ .controls { gap:12px; }
+ .stats { grid-template-columns:1fr; gap:12px; }
+ .table :is(th,td) { padding:12px; }
 }

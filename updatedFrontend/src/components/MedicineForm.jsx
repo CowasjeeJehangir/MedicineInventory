@@ -107,7 +107,7 @@ const MedicineForm = ({ onSave, onCancel, isLoading = false }) => {
             display: 'flex', 
             alignItems: 'center', 
             padding: '10px',
-            backgroundColor: '#f8f9fa',
+            backgroundColor: 'var(--color-subtle)',
             borderRadius: '4px'
           }}>
             <input

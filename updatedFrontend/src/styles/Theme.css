@@ -1,0 +1,84 @@
+/* Shared deep mustard design system. Loaded after page styles. */
+:root {
+  --color-primary: #8a6508;
+  --color-primary-hover: #705106;
+  --color-page: #f8f6f0;
+  --color-surface: #fff;
+  --color-header: #f2e8cf;
+  --color-subtle: #faf7ef;
+  --color-accent-soft: #f3e8cc;
+  --color-accent-text: #785b20;
+  --color-text: #302b20;
+  --color-label: #665638;
+  --color-muted: #706451;
+  --color-border: #e7dfcf;
+  --color-input-border: #94866b;
+  --color-focus-halo: #8a650826;
+  --color-success: #326b50;
+  --color-danger: #aa3535;
+  --shadow-card: 0 16px 48px #493a1910;
+  --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+body { font-family:var(--font-ui); color:var(--color-text); background:var(--color-page); }
+button, input, select, textarea { font:inherit; accent-color:var(--color-primary); }
+button, a, input, select, textarea { -webkit-tap-highlight-color:var(--color-focus-halo); }
+:is(button,a,input,select,textarea,[role="button"]):focus-visible { outline:3px solid var(--color-primary); outline-offset:3px; }
+input, select, textarea { color:var(--color-text); }
+input::placeholder, textarea::placeholder { color:var(--color-muted); opacity:1; }
+a { color:var(--color-primary); }
+.header { padding:24px; text-align:center; background:var(--color-header); color:var(--color-text); border-bottom:1px solid #e5d7b6; }
+.header .logo { margin-bottom:8px; }
+.header .logo-icon { width:36px; height:36px; border-radius:10px; background:#e8d6a8; color:var(--color-accent-text); }
+.header .title { font-size:21px; line-height:1.2; letter-spacing:-.4px; color:#3e3421; margin-bottom:4px; }
+.header .subtitle { font-size:13px; color:#7b6a45; }
+.footer { padding:22px; background:#fcfaf5; border-top:1px solid #eee8dc; }
+.footer p { color:var(--color-muted); font-size:11px; line-height:1.6; }
+.login-container, .medicine-container, .inventory-container { padding:28px 20px; background:var(--color-page); }
+.login-card, .medicine-card, .inventory-card { border:1px solid var(--color-border); border-radius:20px; box-shadow:var(--shadow-card); }
+.medicine-card { max-width:760px; }
+.inventory-card { width:min(1160px,100%); }
+.form-container { padding:26px 32px 36px; }
+.form-title { color:#3e3421; font-size:20px; letter-spacing:-.3px; }
+.form-group label, .medicine-dispense-form .form-label { color:var(--color-label); font-size:13px; font-weight:600; }
+.input-container input, .medicine-dispense-form :is(.form-input,.table-input) { border-color:var(--color-input-border); border-radius:8px; min-height:42px; font-size:14px; }
+.input-container input:focus, .medicine-dispense-form :is(.form-input,.table-input):focus { border-color:var(--color-primary); box-shadow:0 0 0 3px var(--color-focus-halo); }
+.input-container input::placeholder, .medicine-dispense-form :is(.form-input,.table-input)::placeholder { color:var(--color-muted); }
+/* Input icons sit inside sign-in fields; other forms have no icon gutter. */
+.medicine-card .input-container, .login-card .input-container { padding-left:0; }
+.login-card .input-container input { padding-left:40px; padding-right:44px; }
+.medicine-card .input-container input { padding:11px 12px; }
+.sign-in-btn, .save-btn, .medicine-dispense-form :is(.add-item-btn,.submit-btn) { background:var(--color-primary); color:white; border-radius:8px; min-height:38px; font-size:13px; font-weight:600; }
+:is(.sign-in-btn,.save-btn):hover, .medicine-dispense-form :is(.add-item-btn,.submit-btn):hover { background:var(--color-primary-hover); }
+.cancel-btn { background:white; border-color:var(--color-input-border); color:var(--color-label); border-radius:8px; font-size:13px; }
+.form-back-button, .dispense-back-button { color:var(--color-muted); font-size:13px; font-weight:400; }
+.form-back-button:hover, .dispense-back-button:hover { color:var(--color-primary); }
+.security-notice { background:var(--color-subtle); border-color:var(--color-primary); }
+.notice-content :is(h4,p), .notice-icon, .shield-icon, .medicine-icon { color:var(--color-accent-text); }
+.form-group .field-hint { color:var(--color-muted); }
+.medicine-dispense-form .form-container { background:white; border:1px solid var(--color-border); border-radius:12px; box-shadow:none; }
+.medicine-dispense-form .items-section { border-color:var(--color-border); border-radius:12px; }
+.medicine-dispense-form .table-header { background:var(--color-subtle); }
+.notification--success { background:var(--color-success); }
+.notification--error { background:var(--color-danger); }
+.setup-content { padding:32px; }
+.setup-content h1 { font-size:25px; letter-spacing:-.5px; margin-bottom:10px; }
+.setup-content p { color:var(--color-muted); font-size:14px; line-height:1.6; margin-bottom:20px; }
+.setup-content label { display:flex; flex-direction:column; gap:8px; margin:20px 0; font-size:13px; font-weight:600; color:var(--color-label); }
+.setup-content input { padding:12px; width:100%; border:1px solid var(--color-input-border); border-radius:8px; }
+.setup-content button { width:100%; padding:12px; border:0; border-radius:8px; background:var(--color-primary); color:white; font-size:14px; font-weight:600; cursor:pointer; }
+.setup-content button:hover { background:var(--color-primary-hover); }
+.setup-content button:disabled { opacity:.55; cursor:not-allowed; }
+.setup-content [role="alert"] { color:var(--color-danger); }
+@media(max-width:700px) {
+  .login-container, .medicine-container, .inventory-container { padding:12px; }
+  .form-container, .setup-content { padding:22px 16px; }
+  .form-back-button, .dispense-back-button { margin-left:16px; }
+  .header .title { font-size:20px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+}
+.patient-icon { color:var(--color-accent-text); }
+.medicine-dispense-form .items-table { overflow-x:auto; }
+.medicine-dispense-form :is(.table-header,.table-row) { min-width:460px; }
+.login-card .form-group { margin-bottom:18px; }

@@ -65,7 +65,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
       }}>
         <div style={{ 
           border: '4px solid #f3f3f3',
-          borderTop: '4px solid #3498db',
+          borderTop: '4px solid var(--color-primary)',
           borderRadius: '50%',
           width: '40px',
           height: '40px',

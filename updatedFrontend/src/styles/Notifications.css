@@ -15,7 +15,7 @@
   font-weight: 500;
 }
 
-.notification--success { background: #059669; }
+.notification--success { background: var(--color-success); }
 .notification--error { background: #dc2626; }
 
 .notification button {

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 import { ENDPOINTS } from '../config/api';
 
@@ -43,8 +45,8 @@ export default function SetPasswordPage() {
     } catch (err) { setError(err.message); }
     finally { setBusy(false); }
   };
-  if (complete) return <main><h1>Password set successfully</h1><p>Your staff account is ready.</p><Link to="/login">Go to login</Link></main>;
-  return <main className="login-card"><h1>Set up your password</h1>
+  if (complete) return <div className="login-container"><div className="login-card"><Header /><main className="setup-content"><h1>Password set successfully</h1><p>Your staff account is ready.</p><Link to="/login">Go to login</Link></main><Footer /></div></div>;
+  return <div className="login-container"><div className="login-card"><Header /><main className="setup-content"><h1>Set up your password</h1>
     <p>Your invitation expires 24 hours after creation.</p>
     {error && <p role="alert">{error}</p>}
     <form onSubmit={submit}>
@@ -53,5 +55,5 @@ export default function SetPasswordPage() {
       <label>Confirm password<input type="password" autoComplete="new-password" required
         value={confirmation} onChange={(e) => setConfirmation(e.target.value)} disabled={busy || !valid} /></label>
       <button disabled={busy || !valid}>{busy ? 'Setting up…' : 'Set password'}</button>
-    </form></main>;
+    </form></main><Footer /></div></div>;
 }

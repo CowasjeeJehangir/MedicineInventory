@@ -2,15 +2,7 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <div
-      className="header"
-      style={{
-        backgroundColor: "#add3eb",
-        color: "white",
-        padding: "20px",
-        textAlign: "center"
-      }}
-    >
+    <header className="header">
       <div className="logo">
         <div className="logo-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -26,7 +18,7 @@ const Header = () => {
       </div>
       <h1 className="title">Cowasjee Psychiatric Institute</h1>
       <p className="subtitle">Pharmacy Inventory System</p>
-    </div>
+    </header>
   );
 };
 
